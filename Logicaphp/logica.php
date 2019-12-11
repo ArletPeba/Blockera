@@ -16,7 +16,9 @@ class logica {
         $acu = "";
         $route = "/BsckendJ/";
         foreach ($reg as $r) {
+            $detalle = $r['Id_Productos'];
             $acu .= '
+              
                 <div class="col-md-3 col-sm-4 col-xs-6 gallery_iner p0">
                         <img src="' . $route . '' . $r['Imagen'] . '" style="max-height=240px"> 
                             <div class="gallery_hover">
@@ -24,7 +26,8 @@ class logica {
                                 <a href="" class="button_all" data-toggle="modal" data-target="#modalRelatedContent">View</a>
                             </div>
                      </div>
-                    <div class="modal fade right" id="modalRelatedContent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+
+      <div class="modal fade right" id="modalRelatedContent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
   <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
     <!--Content-->
     <div class="modal-content">
@@ -36,13 +39,16 @@ class logica {
           <span aria-hidden="true" class="white-text">&times;</span>
         </button>
       </div>
-
       <!--Body-->
+ 
       <div class="modal-body">
 
         <div class="row">
           <div class="col-5">
-            <img src="' . $route . '' . $r['Imagen'] . '" class="img-fluid" alt="" style="width:100%">
+           
+        
+           <img src="' . $route . '' . $r['Imagen'] . '" style="max-height=240px">
+               <h2>'.$detalle.'</h2>
           </div>
 
           <div class="col-7">
@@ -58,28 +64,29 @@ class logica {
   </div>
 </div>
 <!--Modal: modalRelatedContent-->
-                    ';
+';
+            /* @var $detalle type */
         }
+
         return $acu;
     }
-        public function mostrar_slider() {
+
+    public function mostrar_slider() {
         $reg = $this->bd->select("select* from slider limit ?", "i", 10);
         $acu = "";
-         $route = "/BsckendJ/";
+        $route = "/BsckendJ/";
         foreach ($reg as $r) {
             $acu .= ' <div data-thumb="" data-src="' . $route . '' . $r['Imagen'] . '">
                 <div class="camera_caption">
                    <div class="container">
                         <h5 class=" wow fadeInUp animated">' . $r['Texto'] . '</h5>
-                        <p class=" wow fadeInUp animated" data-wow-delay="0.8s">Estamos para servirte</p>
-                  
+                        
                    </div>
                 </div>
             </div>';
         }
         return $acu;
     }
-    
 
     public function mostrar_productos_postes() {
         $reg = $this->bd->select("select NOMBRE,PRECIO,DESCRIPCION,IMAGEN from productos where TIPO='Arboles' limit ?", "i", 1000);
@@ -99,6 +106,10 @@ class logica {
                     </div>';
         }
         return $acu;
+    }
+
+    public function mostrar_detalle_producto($id) {
+        $reg = $this->bd->select("select* from productos where Id_Productos=? limit 1", "i", $id);
     }
 
 }
